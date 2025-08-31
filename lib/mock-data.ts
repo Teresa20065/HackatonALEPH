@@ -1,0 +1,97 @@
+import type { Organization, UserPortfolio } from "./types"
+
+export const mockOrganizations: Organization[] = [
+  {
+    id: "1",
+    name: "Amazon Rainforest Foundation",
+    description:
+      "Protecting and preserving the Amazon rainforest through sustainable practices and indigenous community support.",
+    image: "/amazon-rainforest-conservation.png",
+    category: "Forest Conservation",
+    fundingGoal: 500000,
+    currentFunding: 342000,
+    interestRate: 0.08,
+    impactMetrics: {
+      treesPlanted: 15000,
+      carbonOffset: 2500,
+      peopleHelped: 850,
+    },
+    verified: true,
+    createdAt: new Date("2024-01-15"),
+  },
+  {
+    id: "2",
+    name: "Solar Villages Initiative",
+    description:
+      "Bringing clean solar energy to remote villages while creating local jobs and sustainable communities.",
+    image: "/solar-panels-village-community.png",
+    category: "Renewable Energy",
+    fundingGoal: 750000,
+    currentFunding: 425000,
+    interestRate: 0.09,
+    impactMetrics: {
+      peopleHelped: 1200,
+      carbonOffset: 3200,
+    },
+    verified: true,
+    createdAt: new Date("2024-02-01"),
+  },
+  {
+    id: "3",
+    name: "Ocean Cleanup Project",
+    description: "Removing plastic waste from oceans and developing sustainable alternatives to single-use plastics.",
+    image: "/ocean-cleanup-plastic-waste-removal.png",
+    category: "Ocean Conservation",
+    fundingGoal: 1000000,
+    currentFunding: 680000,
+    interestRate: 0.07,
+    impactMetrics: {
+      waterSaved: 50000,
+      carbonOffset: 1800,
+    },
+    verified: true,
+    createdAt: new Date("2024-01-20"),
+  },
+]
+
+export const mockUserPortfolio: UserPortfolio = {
+  totalDonated: 5000,
+  totalInterestGenerated: 420,
+  totalInterestDonated: 380,
+  availableToWithdraw: 40,
+  donations: [
+    {
+      id: "1",
+      userId: "1",
+      organizationId: "1",
+      amount: 2000,
+      interestGenerated: 160,
+      blockchain: "ethereum",
+      transactionHash: "0x1234567890abcdef",
+      status: "confirmed",
+      createdAt: new Date("2024-01-20"),
+    },
+    {
+      id: "2",
+      userId: "1",
+      organizationId: "2",
+      amount: 1500,
+      interestGenerated: 135,
+      blockchain: "polygon",
+      transactionHash: "0xabcdef1234567890",
+      status: "confirmed",
+      createdAt: new Date("2024-02-15"),
+    },
+    {
+      id: "3",
+      userId: "1",
+      organizationId: "3",
+      amount: 1500,
+      interestGenerated: 125,
+      blockchain: "ethereum",
+      transactionHash: "0x567890abcdef1234",
+      status: "confirmed",
+      createdAt: new Date("2024-03-01"),
+    },
+  ],
+}
