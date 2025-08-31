@@ -10,7 +10,6 @@ import Image from "next/image"
 import { useSession, signIn } from "next-auth/react"
 import { useAccount } from "wagmi"
 import { useState } from "react"
-import { DonationFlow } from "@/components/web3/donation-flow"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
 
 interface OrganizationCardProps {
@@ -143,7 +142,30 @@ export function OrganizationCard({ organization }: OrganizationCardProps) {
             <DialogTitle>Make a Sustainable Donation</DialogTitle>
             <DialogDescription>Your principal stays safe while interest supports the cause</DialogDescription>
           </DialogHeader>
-          <DonationFlow organization={organization} onClose={() => setShowDonationFlow(false)} />
+          <div className="space-y-4">
+            <div className="text-center">
+              <h4 className="font-semibold mb-2">Donation Coming Soon!</h4>
+              <p className="text-sm text-muted-foreground">
+                We're working on integrating ZeroDev for seamless donations. 
+                Stay tuned for the full Web3 experience!
+              </p>
+            </div>
+            <div className="flex gap-2">
+              <Button 
+                variant="outline" 
+                onClick={() => setShowDonationFlow(false)}
+                className="flex-1"
+              >
+                Close
+              </Button>
+              <Button 
+                onClick={() => setShowDonationFlow(false)}
+                className="flex-1"
+              >
+                Learn More
+              </Button>
+            </div>
+          </div>
         </DialogContent>
       </Dialog>
     </>

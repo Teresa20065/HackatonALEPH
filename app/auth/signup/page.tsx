@@ -12,6 +12,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Checkbox } from "@/components/ui/checkbox"
 import { Leaf, Mail, Wallet, ArrowLeft } from "lucide-react"
+import { ZeroDevConnect } from "@/components/auth/zerodev-connect"
 import Link from "next/link"
 
 export default function SignUpPage() {
@@ -183,7 +184,7 @@ export default function SignUpPage() {
 
               <TabsContent value="wallet" className="space-y-4">
                 <div className="text-center space-y-4">
-                  <p className="text-sm text-muted-foreground">Connect your Web3 wallet to create your account</p>
+                  <p className="text-sm text-muted-foreground">Connect your Web3 wallet with ZeroDev to create your account</p>
 
                   <div className="flex items-center space-x-2">
                     <Checkbox
@@ -199,12 +200,9 @@ export default function SignUpPage() {
                     </Label>
                   </div>
 
-                  <Button onClick={handleWalletConnect} className="w-full" disabled={isLoading || !acceptTerms}>
-                    <Wallet className="mr-2 h-4 w-4" />
-                    {isLoading ? "Connecting..." : "Connect Wallet"}
-                  </Button>
+                  <ZeroDevConnect />
                   <p className="text-xs text-muted-foreground">
-                    Supports MetaMask, WalletConnect, and other Web3 wallets
+                    ZeroDev provides account abstraction for seamless Web3 authentication
                   </p>
                 </div>
               </TabsContent>

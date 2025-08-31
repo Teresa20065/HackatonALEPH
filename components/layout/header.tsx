@@ -26,9 +26,7 @@ export function Header() {
           <Link href="#organizations" className="transition-colors hover:text-primary">
             Organizations
           </Link>
-          <Link href="/web3-demo" className="transition-colors hover:text-primary">
-            Web3 Demo
-          </Link>
+
           <Link href="/about" className="transition-colors hover:text-primary">
             About
           </Link>
@@ -74,13 +72,7 @@ export function Header() {
             >
               Organizations
             </Link>
-            <Link
-              href="/web3-demo"
-              className="block py-2 text-sm font-medium transition-colors hover:text-primary"
-              onClick={() => setIsMenuOpen(false)}
-            >
-              Web3 Demo
-            </Link>
+
             <Link
               href="/about"
               className="block py-2 text-sm font-medium transition-colors hover:text-primary"

@@ -13,6 +13,8 @@ const queryClient = new QueryClient({
     queries: {
       staleTime: 60 * 1000, // 1 minuto
       retry: 1,
+      refetchOnWindowFocus: false,
+      refetchOnReconnect: false,
     },
   },
 })
@@ -23,12 +25,25 @@ interface Web3ProviderProps {
 
 export function Web3Provider({ children }: Web3ProviderProps) {
   const [mounted, setMounted] = useState(false)
+  const [isInitialized, setIsInitialized] = useState(false)
 
   useEffect(() => {
-    setMounted(true)
+    // Delay para asegurar que WalletConnect se inicialice correctamente
+    const timer = setTimeout(() => {
+      setMounted(true)
+      setIsInitialized(true)
+    }, 1500) // 1.5 segundos para estabilidad
+    
+    // Cleanup function para evitar memory leaks
+    return () => {
+      clearTimeout(timer)
+      setMounted(false)
+      setIsInitialized(false)
+    }
   }, [])
 
-  if (!mounted) {
+  // Evitar renderizado durante SSR y esperar inicialización
+  if (typeof window === 'undefined' || !mounted || !isInitialized) {
     return null
   }
 

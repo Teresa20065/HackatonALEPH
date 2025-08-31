@@ -17,11 +17,20 @@ export const wagmiConfig = createConfig(
     appDescription: 'Sustainable Donations Platform',
     appUrl: 'https://suma.app',
     appIcon: '/logo.png',
-    // Prevenir múltiples inicializaciones
+    // Configuración ultra-optimizada para evitar múltiples inicializaciones
     enableWalletConnect: true,
     enableInjected: true,
     enableEIP6963: true,
     enableCoinbase: false,
+    // Configuraciones adicionales para estabilidad
+    enableExplorer: false,
+    explorerRecommendedWalletIds: 'NONE',
+    explorerExcludedWalletIds: 'ALL',
+    // Configuraciones críticas para estabilidad
+    enableAnalytics: false,
+    enableOnramp: false,
+    enableSwap: false,
+    enableSmartAccount: false,
   })
 )
 

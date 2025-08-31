@@ -4,14 +4,24 @@ import { Button } from "@/components/ui/button"
 import { ArrowRight, Leaf, Zap, Heart } from "lucide-react"
 import { useSession, signIn } from "next-auth/react"
 import Link from "next/link"
+import Image from "next/image"
 
 export function HeroSection() {
   const { data: session } = useSession()
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-background via-background to-muted/30">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-[linear-gradient(45deg,transparent_25%,rgba(8,145,178,0.05)_25%,rgba(8,145,178,0.05)_50%,transparent_50%,transparent_75%,rgba(8,145,178,0.05)_75%)] bg-[length:60px_60px]" />
+    <section className="relative overflow-hidden">
+      {/* Imagen de fondo con overlay */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/Inicio.png"
+          alt="Sustainable Future Background"
+          fill
+          className="object-cover"
+          priority
+        />
+        <div className="absolute inset-0 bg-gradient-to-br from-primary/20 via-primary/10 to-background/80" />
+      </div>
 
       <div className="container relative mx-auto px-4 py-24 sm:py-32">
         <div className="mx-auto max-w-4xl text-center">
@@ -36,12 +46,12 @@ export function HeroSection() {
 
           <h1 className="text-balance font-montserrat text-4xl font-black tracking-tight sm:text-6xl lg:text-7xl">
             Donate{" "}
-            <span className="bg-gradient-to-r from-primary to-secondary bg-clip-text text-transparent">
-              Sustainably
+            <span className="bg-gradient-to-r from-[#c63e08e4] to-[rgba(7,59,15,0.89)] bg-clip-text text-transparent">
+               Sustainably
             </span>
           </h1>
 
-          <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-8 text-muted-foreground sm:text-xl">
+          <p className="mx-auto mt-6 max-w-2xl text-pretty text-lg leading-8 text-white sm:text-xl">
             Keep your capital, donate the interest. Support verified environmental organizations while your principal
             remains intact and grows through sustainable DeFi protocols.
           </p>
@@ -68,18 +78,18 @@ export function HeroSection() {
           {/* Trust Indicators */}
           <div className="mt-16 grid grid-cols-3 gap-8 text-center">
             <div>
-              <div className="text-2xl font-bold text-primary">$2.4M+</div>
-              <div className="text-sm text-muted-foreground">Total Donated</div>
+              <div className="text-2xl font-bold text-[#65f611e7]">$2.4M+</div>
+              <div className="text-sm  text-white ">Total Donated</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-secondary">15+</div>
-              <div className="text-sm text-muted-foreground">Verified Organizations</div>
+              <div className="text-2xl font-bold text-[#f35f10d0]">15+</div>
+              <div className="text-sm  text-white ">Verified Organizations</div>
             </div>
             <div>
-              <div className="text-2xl font-bold text-accent">8.5%</div>
-              <div className="text-sm text-muted-foreground">Average APY</div>
+              <div className="text-2xl font-bold text-[#f35f10d0]">8.5%</div>
+              <div className="text-sm  text-white ">Average APY</div>
             </div>
-          </div>
+          </div>S
         </div>
       </div>
     </section>

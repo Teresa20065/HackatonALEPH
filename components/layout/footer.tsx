@@ -1,11 +1,21 @@
 import Link from "next/link"
 import { Logo } from "@/components/ui/logo"
 import { Github, Twitter, Mail } from "lucide-react"
+import Image from "next/image"
 
 export function Footer() {
   return (
-    <footer className="border-t border-border bg-muted/30">
-      <div className="container mx-auto px-4 py-12">
+    <footer className="relative overflow-hidden border-t border-border">
+      {/* Imagen de fondo con overlay */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/Paneles.jpg"
+          alt="Solar Panels Background"
+          fill
+          className="object-cover opacity-5"
+        />
+      </div>
+      <div className="container mx-auto px-4 py-12 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="space-y-4">

@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Trees, Zap, Droplets, Users } from "lucide-react"
+import Image from "next/image"
 
 export function StatsSection() {
   const stats = [
@@ -30,8 +31,17 @@ export function StatsSection() {
   ]
 
   return (
-    <section className="py-16 bg-muted/30">
-      <div className="container mx-auto px-4">
+    <section className="py-16 relative overflow-hidden">
+      {/* Imagen de fondo con overlay */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/Comparacion.png"
+          alt="Impact Comparison Background"
+          fill
+          className="object-cover opacity-5"
+        />
+      </div>
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-12">
           <h2 className="text-3xl font-bold font-montserrat mb-4">Real Impact, Measurable Results</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">

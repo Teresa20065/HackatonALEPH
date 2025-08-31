@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card"
 import { Wallet, Sprout, TrendingUp, Heart } from "lucide-react"
+import Image from "next/image"
 
 export function HowItWorksSection() {
   const steps = [
@@ -32,8 +33,17 @@ export function HowItWorksSection() {
   ]
 
   return (
-    <section id="how-it-works" className="py-24">
-      <div className="container mx-auto px-4">
+    <section id="how-it-works" className="py-24 relative overflow-hidden">
+      {/* Imagen de fondo con overlay */}
+      <div className="absolute inset-0">
+        <Image
+          src="/images/Arqui.png"
+          alt="Sustainable Architecture Background"
+          fill
+          className="object-cover opacity-10"
+        />
+      </div>
+      <div className="container mx-auto px-4 relative z-10">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold font-montserrat mb-4">How Sustainable Donations Work</h2>
           <p className="text-muted-foreground max-w-2xl mx-auto text-lg">
