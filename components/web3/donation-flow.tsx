@@ -16,6 +16,7 @@ import type { Organization } from "@/lib/types"
 
 interface DonationFlowProps {
   organization: Organization
+  goal?: { id: string; title: string; description: string; currentAmount: number; targetAmount: number } | null
   onClose: () => void
 }
 
@@ -35,7 +36,7 @@ const DONATION_CONTRACT_ABI = [
 
 const DONATION_CONTRACT_ADDRESS = "0x1234567890123456789012345678901234567890" as const
 
-export function DonationFlow({ organization, onClose }: DonationFlowProps) {
+export function DonationFlow({ organization, goal, onClose }: DonationFlowProps) {
   const [amount, setAmount] = useState("")
   const [selectedProtocol, setSelectedProtocol] = useState("")
   const [step, setStep] = useState<"input" | "confirm" | "processing" | "success">("input")
@@ -60,7 +61,7 @@ export function DonationFlow({ organization, onClose }: DonationFlowProps) {
         address: DONATION_CONTRACT_ADDRESS,
         abi: DONATION_CONTRACT_ABI,
         functionName: "donate",
-        args: [organization.id, parseEther(amount)],
+        args: [goal ? goal.id : organization.id, parseEther(amount)],
         value: parseEther(amount),
       })
     } catch (error) {
@@ -80,12 +81,16 @@ export function DonationFlow({ organization, onClose }: DonationFlowProps) {
             <CheckCircle className="h-6 w-6 text-green-600" />
           </div>
           <CardTitle>Donation Successful!</CardTitle>
-          <CardDescription>Your sustainable donation has been processed</CardDescription>
+          <CardDescription>
+            {goal ? `Your sustainable donation to "${goal.title}" has been processed` : "Your sustainable donation has been processed"}
+          </CardDescription>
         </CardHeader>
         <CardContent className="space-y-4">
           <div className="text-center space-y-2">
             <div className="text-2xl font-bold">${amount}</div>
-            <div className="text-sm text-muted-foreground">Deposited to {organization.name}</div>
+            <div className="text-sm text-muted-foreground">
+              Deposited to {goal ? goal.title : organization.name}
+            </div>
           </div>
 
           <div className="bg-muted/50 rounded-lg p-4 space-y-2">
@@ -114,8 +119,28 @@ export function DonationFlow({ organization, onClose }: DonationFlowProps) {
   return (
     <Card className="w-full max-w-md mx-auto">
       <CardHeader>
-        <CardTitle>Donate to {organization.name}</CardTitle>
-        <CardDescription>Your principal stays safe while interest goes to the cause</CardDescription>
+        <CardTitle>
+          {goal ? `Donate to ${goal.title}` : `Donate to ${organization.name}`}
+        </CardTitle>
+        <CardDescription>
+          {goal ? goal.description : "Your principal stays safe while interest goes to the cause"}
+        </CardDescription>
+        {goal && (
+          <div className="mt-2 p-3 bg-muted/50 rounded-lg">
+            <div className="text-sm text-muted-foreground">
+              <div className="flex justify-between mb-1">
+                <span>Goal Progress:</span>
+                <span className="font-medium">
+                  ${goal.currentAmount.toLocaleString()} / ${goal.targetAmount.toLocaleString()}
+                </span>
+              </div>
+              <Progress 
+                value={(goal.currentAmount / goal.targetAmount) * 100} 
+                className="h-2"
+              />
+            </div>
+          </div>
+        )}
       </CardHeader>
       <CardContent className="space-y-6">
         {step === "input" && (
@@ -179,12 +204,14 @@ export function DonationFlow({ organization, onClose }: DonationFlowProps) {
                     </div>
                     <div className="flex justify-between">
                       <span>Interest Destination:</span>
-                      <span className="font-medium">{organization.name}</span>
+                      <span className="font-medium">
+                        {goal ? goal.title : organization.name}
+                      </span>
                     </div>
                   </div>
                   <div className="text-xs text-muted-foreground">
                     Your ${amount} principal remains yours and can be withdrawn anytime. Only the interest goes to the
-                    organization.
+                    {goal ? ` "${goal.title}" project` : " organization"}.
                   </div>
                 </div>
               )}

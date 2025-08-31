@@ -1,6 +1,6 @@
 import type { Organization, UserPortfolio } from "./types"
 
-export const mockOrganizations: Organization[] = [
+export const mockOrganizations: (Organization & { slug: string })[] = [
   {
     id: "1",
     name: "Amazon Rainforest Foundation",
@@ -18,6 +18,7 @@ export const mockOrganizations: Organization[] = [
     },
     verified: true,
     createdAt: new Date("2024-01-15"),
+    slug: "amazon-rainforest-foundation",
   },
   {
     id: "2",
@@ -35,6 +36,7 @@ export const mockOrganizations: Organization[] = [
     },
     verified: true,
     createdAt: new Date("2024-02-01"),
+    slug: "solar-villages-initiative",
   },
   {
     id: "3",
@@ -51,6 +53,7 @@ export const mockOrganizations: Organization[] = [
     },
     verified: true,
     createdAt: new Date("2024-01-20"),
+    slug: "ocean-cleanup-project",
   },
 ]
 

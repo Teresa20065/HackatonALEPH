@@ -4,7 +4,7 @@ import { Card, CardContent, CardFooter, CardHeader } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { Progress } from "@/components/ui/progress"
-import { CheckCircle, Trees, Users, Droplets, Zap } from "lucide-react"
+import { CheckCircle, Trees, Users, Droplets, Zap, ExternalLink } from "lucide-react"
 import type { Organization } from "@/lib/types"
 import Image from "next/image"
 import { useSession, signIn } from "next-auth/react"
@@ -12,16 +12,21 @@ import { useAccount } from "wagmi"
 import { useState } from "react"
 import { DonationFlow } from "@/components/web3/donation-flow"
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog"
+import { useRouter } from "next/navigation"
 
 interface OrganizationCardProps {
-  organization: Organization
+  organization: Organization & { slug?: string }
 }
 
 export function OrganizationCard({ organization }: OrganizationCardProps) {
   const { data: session } = useSession()
   const { isConnected } = useAccount()
   const [showDonationFlow, setShowDonationFlow] = useState(false)
+  const router = useRouter()
   const fundingPercentage = (organization.currentFunding / organization.fundingGoal) * 100
+
+  // Generar slug si no existe
+  const slug = organization.slug || organization.name.toLowerCase().replace(/\s+/g, '-').replace(/[^a-z0-9-]/g, '')
 
   const getImpactIcon = (metric: string) => {
     switch (metric) {
@@ -53,7 +58,10 @@ export function OrganizationCard({ organization }: OrganizationCardProps) {
     }
   }
 
-  const handleDonate = () => {
+  const handleDonate = (e: React.MouseEvent) => {
+    e.preventDefault()
+    e.stopPropagation()
+    
     if (!session) {
       signIn()
       return
@@ -68,9 +76,17 @@ export function OrganizationCard({ organization }: OrganizationCardProps) {
     setShowDonationFlow(true)
   }
 
+  const handleCardClick = () => {
+    // Navegar a la página de detalle usando Next.js router
+    router.push(`/orgs/${slug}`)
+  }
+
   return (
     <>
-      <Card className="overflow-hidden hover:shadow-lg transition-shadow">
+      <Card 
+        className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer group"
+        onClick={handleCardClick}
+      >
         <div className="relative h-48">
           <Image src={organization.image || "/placeholder.svg"} alt={organization.name} fill className="object-cover" />
           <div className="absolute top-4 right-4">
@@ -81,12 +97,18 @@ export function OrganizationCard({ organization }: OrganizationCardProps) {
               </Badge>
             )}
           </div>
+          {/* Overlay indicador de click */}
+          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-200 flex items-center justify-center">
+            <ExternalLink className="w-8 h-8 text-white opacity-0 group-hover:opacity-100 transition-opacity duration-200" />
+          </div>
         </div>
 
         <CardHeader className="pb-4">
           <div className="flex items-start justify-between">
             <div>
-              <h3 className="text-xl font-semibold mb-2">{organization.name}</h3>
+              <h3 className="text-xl font-semibold mb-2 group-hover:text-primary transition-colors">
+                {organization.name}
+              </h3>
               <Badge variant="outline" className="mb-3">
                 {organization.category}
               </Badge>
@@ -131,7 +153,10 @@ export function OrganizationCard({ organization }: OrganizationCardProps) {
         </CardContent>
 
         <CardFooter>
-          <Button onClick={handleDonate} className="w-full">
+          <Button 
+            onClick={handleDonate} 
+            className="w-full group-hover:bg-primary/90 transition-colors"
+          >
             {!session ? "Sign In to Donate" : !isConnected ? "Connect Wallet" : "Donate Interest"}
           </Button>
         </CardFooter>
